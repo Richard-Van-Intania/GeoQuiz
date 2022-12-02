@@ -6,9 +6,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.geoquiz.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
-  //  private lateinit var text1: TextView
+  //  private lateinit var textQuestion: TextView
   //  private lateinit var buttonTrue: Button
   //  private lateinit var buttonFalse: Button
   //  private lateinit var buttonNext: Button
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    //    text1 = findViewById(R.id.text1)
+    //    textQuestion = findViewById(R.id.textQuestion)
     //    buttonTrue = findViewById(R.id.buttonTrue)
     //    buttonFalse = findViewById(R.id.buttonFalse)
     //    buttonNext = findViewById(R.id.buttonNext)
@@ -62,8 +63,14 @@ class MainActivity : AppCompatActivity() {
       Toast.makeText(this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show()
     }
 
-    binding.buttonNext.setOnClickListener { view: View ->
-      Snackbar.make(view, "Next", Snackbar.LENGTH_INDEFINITE).setAction(R.string.ok, {}).show()
+    binding.buttonNext.setOnClickListener {
+      currentIndex = (currentIndex + 1) % questionBank.size
+      updateQuestion()
+    }
+
+    binding.buttonRandom.setOnClickListener {
+      currentIndex = Random.nextInt(questionBank.size)
+      randomQuestion()
     }
 
     binding.buttonDebug.setOnClickListener { view: View ->
@@ -72,7 +79,18 @@ class MainActivity : AppCompatActivity() {
           .show()
     }
 
-    val questionTextResId = questionBank[currentIndex].textResId
-    binding.text1.setText(questionTextResId)
+    setText()
+  }
+
+  private fun updateQuestion() {
+    setText()
+  }
+
+  private fun randomQuestion() {
+    setText()
+  }
+
+  private fun setText() {
+    binding.textQuestion.setText(questionBank[currentIndex].textResId)
   }
 }
