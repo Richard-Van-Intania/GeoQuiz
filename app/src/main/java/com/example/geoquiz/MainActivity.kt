@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, R.string.correct_toast, Snackbar.LENGTH_SHORT)
                 .setAction(R.string.ok) {}
                 .show()
+
         }
 
         binding.buttonFalse.setOnClickListener { view: View ->
@@ -80,10 +81,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.buttonDebug.setOnClickListener { view: View ->
-            Toast.makeText(this, "this is a debug jaaa", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.debug_toast, Toast.LENGTH_SHORT).show()
         }
 
         updateText()
+
     }
 
 
