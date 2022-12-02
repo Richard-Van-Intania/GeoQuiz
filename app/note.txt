@@ -1,0 +1,9 @@
+widget --> view
+
+“A ViewGroup is a kind of View that contains and arranges other views.
+A ViewGroup does not display content itself.
+Rather, it orchestrates where other views’ content is displayed.
+ViewGroups are often referred to as “layouts.”
+
+layout widget ---> (ViewGroup)layout
+
