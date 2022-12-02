@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
   //  private lateinit var buttonNext: Button
   //  private lateinit var buttonDebug: Button
 
+    private lateinit var binding: ActivityMainBinding
+
   private val questionBank =
       listOf(
           Question(R.string.question_australia, true),
@@ -26,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
   private var currentIndex = 0
 
-  private lateinit var binding: ActivityMainBinding
+
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
