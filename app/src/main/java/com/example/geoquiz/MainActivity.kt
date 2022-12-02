@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
     binding.buttonDebug.setOnClickListener { view: View ->
       Snackbar.make(view, "Debug message", Snackbar.LENGTH_INDEFINITE)
-          .setAction(R.string.ok, {})
+          .setAction(R.string.ok) {}
           .show()
     }
 
