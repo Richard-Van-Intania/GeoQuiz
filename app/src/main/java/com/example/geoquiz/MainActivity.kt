@@ -88,6 +88,9 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
       }
+      if (correctCount + incorrectCount == 6) {
+        Toast.makeText(this, "Score: ${correctCount}/${incorrectCount}", Toast.LENGTH_LONG).show()
+      }
     }
 
     binding.buttonFalse.setOnClickListener { view: View ->
@@ -117,6 +120,9 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
       }
+      if (correctCount + incorrectCount == 6) {
+        Toast.makeText(this, "Score: ${correctCount}/${incorrectCount}", Toast.LENGTH_LONG).show()
+      }
     }
 
     binding.buttonNext.setOnClickListener {
@@ -145,7 +151,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     binding.buttonDebug.setOnClickListener {
-      Toast.makeText(this, "${correctCount}/${incorrectCount}", Toast.LENGTH_SHORT).show()
+      Toast.makeText(this, "Score: ${correctCount}/${incorrectCount}", Toast.LENGTH_SHORT).show()
     }
 
     updateQuestion()
