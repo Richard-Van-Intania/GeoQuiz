@@ -35,7 +35,9 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:text="@string/true_button"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:icon="@drawable/ic_baseline_check_24"
+            app:iconGravity="textStart" />
 
         <Button
             android:id="@+id/buttonFalse"
@@ -44,7 +46,9 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:text="@string/false_button"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:icon="@drawable/ic_baseline_clear_24"
+            app:iconGravity="textStart" />
 
 
     </LinearLayout>
@@ -55,7 +59,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="10dp">
-
+        <Button
+            android:id="@+id/buttonPrev"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:text="@string/prev_button"
+            android:textSize="20sp"
+            app:icon="@drawable/ic_baseline_skip_previous_24"
+            app:iconGravity="textStart" />
 
         <Button
             android:id="@+id/buttonNext"
@@ -64,7 +77,9 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:text="@string/next_button"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:icon="@drawable/ic_baseline_skip_next_24"
+            app:iconGravity="textEnd" />
 
     </LinearLayout>
 
@@ -82,7 +97,9 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:text="@string/random_button"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:icon="@drawable/ic_baseline_sync_24"
+            app:iconGravity="textStart" />
 
     </LinearLayout>
 
@@ -100,7 +117,9 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:text="@string/debug_button"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:icon="@drawable/ic_baseline_code_24"
+            app:iconGravity="textStart" />
 
     </LinearLayout>
 

@@ -64,14 +64,14 @@ class MainActivity : AppCompatActivity() {
             .show()
         correctCount++
         currentIndex = (currentIndex + 1) % questionBank.size
-        updateText()
+        updateQuestion()
       } else {
         Snackbar.make(view, R.string.incorrect_toast, Snackbar.LENGTH_SHORT)
             .setAction(R.string.ok) {}
             .show()
         incorrectCount++
         currentIndex = (currentIndex + 1) % questionBank.size
-        updateText()
+        updateQuestion()
       }
     }
 
@@ -82,35 +82,49 @@ class MainActivity : AppCompatActivity() {
             .show()
         correctCount++
         currentIndex = (currentIndex + 1) % questionBank.size
-        updateText()
+        updateQuestion()
       } else {
         Snackbar.make(view, R.string.incorrect_toast, Snackbar.LENGTH_SHORT)
             .setAction(R.string.ok) {}
             .show()
         incorrectCount++
         currentIndex = (currentIndex + 1) % questionBank.size
-        updateText()
+        updateQuestion()
       }
     }
 
     binding.buttonNext.setOnClickListener {
       currentIndex = (currentIndex + 1) % questionBank.size
-      updateText()
+      updateQuestion()
+    }
+    binding.buttonPrev.setOnClickListener {
+      if (currentIndex == 0) {
+        currentIndex = questionBank.size - 1
+        updateQuestion()
+      } else {
+        currentIndex = (currentIndex - 1) % questionBank.size
+        updateQuestion()
+      }
+    }
+
+    binding.textQuestion.setOnClickListener {
+      currentIndex = (currentIndex + 1) % questionBank.size
+      updateQuestion()
     }
 
     binding.buttonRandom.setOnClickListener {
       currentIndex = Random.nextInt(questionBank.size)
-      updateText()
+      updateQuestion()
     }
 
     binding.buttonDebug.setOnClickListener {
       Toast.makeText(this, "${correctCount}/${incorrectCount}", Toast.LENGTH_SHORT).show()
     }
 
-    updateText()
+    updateQuestion()
   }
 
-  private fun updateText() {
+  private fun updateQuestion() {
     binding.textQuestion.setText(questionBank[currentIndex].textResId)
   }
 }
