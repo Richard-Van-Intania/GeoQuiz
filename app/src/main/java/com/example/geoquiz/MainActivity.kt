@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    Log.d(TAG, "onCreate(Bundle?) called")
+    Log.d(TAG, "onCreate(Bundle?) called: Created")
     // setContentView(R.layout.activity_main)
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
@@ -62,38 +62,60 @@ class MainActivity : AppCompatActivity() {
     //    }
 
     binding.buttonTrue.setOnClickListener { view: View ->
-      if (questionBank[currentIndex].answer) {
-        Snackbar.make(view, R.string.correct_toast, Snackbar.LENGTH_SHORT)
-            .setAction(R.string.ok) {}
-            .show()
-        correctCount++
-        currentIndex = (currentIndex + 1) % questionBank.size
-        updateQuestion()
+      if (!questionBank[currentIndex].answered) {
+        if (questionBank[currentIndex].answer) {
+          questionBank[currentIndex].answered = true
+          Snackbar.make(view, R.string.correct_toast, Snackbar.LENGTH_SHORT)
+              .setAction(R.string.ok) {}
+              .show()
+          correctCount++
+          currentIndex = (currentIndex + 1) % questionBank.size
+          updateQuestion()
+        } else {
+          questionBank[currentIndex].answered = true
+          Snackbar.make(view, R.string.incorrect_toast, Snackbar.LENGTH_SHORT)
+              .setAction(R.string.ok) {}
+              .show()
+          incorrectCount++
+          currentIndex = (currentIndex + 1) % questionBank.size
+          updateQuestion()
+        }
       } else {
-        Snackbar.make(view, R.string.incorrect_toast, Snackbar.LENGTH_SHORT)
-            .setAction(R.string.ok) {}
+        Snackbar.make(view, R.string.alreadyAnswer, Snackbar.LENGTH_INDEFINITE)
+            .setAction(R.string.ok) {
+              currentIndex = (currentIndex + 1) % questionBank.size
+              updateQuestion()
+            }
             .show()
-        incorrectCount++
-        currentIndex = (currentIndex + 1) % questionBank.size
-        updateQuestion()
       }
     }
 
     binding.buttonFalse.setOnClickListener { view: View ->
-      if (!questionBank[currentIndex].answer) {
-        Snackbar.make(view, R.string.correct_toast, Snackbar.LENGTH_SHORT)
-            .setAction(R.string.ok) {}
-            .show()
-        correctCount++
-        currentIndex = (currentIndex + 1) % questionBank.size
-        updateQuestion()
+      if (!questionBank[currentIndex].answered) {
+        if (!questionBank[currentIndex].answer) {
+          questionBank[currentIndex].answered = true
+          Snackbar.make(view, R.string.correct_toast, Snackbar.LENGTH_SHORT)
+              .setAction(R.string.ok) {}
+              .show()
+          correctCount++
+          currentIndex = (currentIndex + 1) % questionBank.size
+          updateQuestion()
+        } else {
+          questionBank[currentIndex].answered = true
+          Snackbar.make(view, R.string.incorrect_toast, Snackbar.LENGTH_SHORT)
+              .setAction(R.string.ok) {}
+              .show()
+          incorrectCount++
+          currentIndex = (currentIndex + 1) % questionBank.size
+          updateQuestion()
+        }
       } else {
-        Snackbar.make(view, R.string.incorrect_toast, Snackbar.LENGTH_SHORT)
-            .setAction(R.string.ok) {}
+        Snackbar.make(view, R.string.alreadyAnswer, Snackbar.LENGTH_INDEFINITE)
+            .setAction(R.string.ok) {
+              currentIndex = (currentIndex + 1) % questionBank.size
+              updateQuestion()
+            }
             .show()
-        incorrectCount++
-        currentIndex = (currentIndex + 1) % questionBank.size
-        updateQuestion()
       }
     }
 
@@ -101,6 +123,7 @@ class MainActivity : AppCompatActivity() {
       currentIndex = (currentIndex + 1) % questionBank.size
       updateQuestion()
     }
+
     binding.buttonPrev.setOnClickListener {
       if (currentIndex == 0) {
         currentIndex = questionBank.size - 1
@@ -130,27 +153,27 @@ class MainActivity : AppCompatActivity() {
 
   override fun onStart() {
     super.onStart()
-    Log.d(TAG, "onStart() called")
+    Log.d(TAG, "onStart() called: Started")
   }
 
   override fun onResume() {
     super.onResume()
-    Log.d(TAG, "onResume() called")
+    Log.d(TAG, "onResume() called: Resumed")
   }
 
   override fun onPause() {
     super.onPause()
-    Log.d(TAG, "onPause() called")
+    Log.d(TAG, "onPause() called: Started")
   }
 
   override fun onStop() {
     super.onStop()
-    Log.d(TAG, "onStop() called")
+    Log.d(TAG, "onStop() called: Created")
   }
 
   override fun onDestroy() {
     super.onDestroy()
-    Log.d(TAG, "onDestroy() called")
+    Log.d(TAG, "onDestroy() called: destroyed or Nonexistent")
   }
 
   private fun updateQuestion() {

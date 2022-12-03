@@ -20,6 +20,7 @@
   freshwater lake.</string>
     <string name="random_button">Random</string>
     <string name="prev_button">Previous</string>
+    <string name="alreadyAnswer">You have already answered this question</string>
 
 
 </resources>
