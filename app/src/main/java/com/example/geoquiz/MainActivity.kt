@@ -69,16 +69,12 @@ class MainActivity : AppCompatActivity() {
               .setAction(R.string.ok) {}
               .show()
           correctCount++
-          currentIndex = (currentIndex + 1) % questionBank.size
-          updateQuestion()
         } else {
           questionBank[currentIndex].answered = true
           Snackbar.make(view, R.string.incorrect_toast, Snackbar.LENGTH_SHORT)
               .setAction(R.string.ok) {}
               .show()
           incorrectCount++
-          currentIndex = (currentIndex + 1) % questionBank.size
-          updateQuestion()
         }
       } else {
         Snackbar.make(view, R.string.alreadyAnswer, Snackbar.LENGTH_INDEFINITE)
@@ -87,9 +83,6 @@ class MainActivity : AppCompatActivity() {
               updateQuestion()
             }
             .show()
-      }
-      if (correctCount + incorrectCount == 6) {
-        Toast.makeText(this, "Score: ${correctCount}/${incorrectCount}", Toast.LENGTH_LONG).show()
       }
     }
 
@@ -101,16 +94,12 @@ class MainActivity : AppCompatActivity() {
               .setAction(R.string.ok) {}
               .show()
           correctCount++
-          currentIndex = (currentIndex + 1) % questionBank.size
-          updateQuestion()
         } else {
           questionBank[currentIndex].answered = true
           Snackbar.make(view, R.string.incorrect_toast, Snackbar.LENGTH_SHORT)
               .setAction(R.string.ok) {}
               .show()
           incorrectCount++
-          currentIndex = (currentIndex + 1) % questionBank.size
-          updateQuestion()
         }
       } else {
         Snackbar.make(view, R.string.alreadyAnswer, Snackbar.LENGTH_INDEFINITE)
@@ -120,12 +109,14 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
       }
-      if (correctCount + incorrectCount == 6) {
-        Toast.makeText(this, "Score: ${correctCount}/${incorrectCount}", Toast.LENGTH_LONG).show()
-      }
     }
 
     binding.buttonNext.setOnClickListener {
+      currentIndex = (currentIndex + 1) % questionBank.size
+      updateQuestion()
+    }
+
+    binding.textQuestion.setOnClickListener {
       currentIndex = (currentIndex + 1) % questionBank.size
       updateQuestion()
     }
@@ -140,18 +131,14 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-    binding.textQuestion.setOnClickListener {
-      currentIndex = (currentIndex + 1) % questionBank.size
-      updateQuestion()
-    }
-
     binding.buttonRandom.setOnClickListener {
       currentIndex = Random.nextInt(questionBank.size)
       updateQuestion()
     }
 
     binding.buttonDebug.setOnClickListener {
-      Toast.makeText(this, "Score: ${correctCount}/${incorrectCount}", Toast.LENGTH_SHORT).show()
+      Toast.makeText(this, "Score Now: ${correctCount}/${incorrectCount}", Toast.LENGTH_SHORT)
+          .show()
     }
 
     updateQuestion()
@@ -184,5 +171,9 @@ class MainActivity : AppCompatActivity() {
 
   private fun updateQuestion() {
     binding.textQuestion.setText(questionBank[currentIndex].textResId)
+    if (correctCount + incorrectCount == 6) {
+      Toast.makeText(this, "Your Score: ${correctCount}/${incorrectCount}", Toast.LENGTH_LONG)
+          .show()
+    }
   }
 }
