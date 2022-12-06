@@ -8,7 +8,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.geoquiz.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
-import kotlin.random.Random
 
 private const val TAG = "MainActivity"
 
@@ -27,19 +26,6 @@ class MainActivity : AppCompatActivity() {
   By referencing it in a logging message, you can initialize it and log the value on the same line.”
   */
   private val quizViewModel: QuizViewModel by viewModels()
-
-  private val questionBank =
-      listOf(
-          Question(R.string.question_australia, true),
-          Question(R.string.question_oceans, true),
-          Question(R.string.question_mideast, false),
-          Question(R.string.question_africa, false),
-          Question(R.string.question_americas, true),
-          Question(R.string.question_asia, true))
-
-  private var currentIndex = 0
-  private var correctCount = 0
-  private var incorrectCount = 0
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -116,7 +102,7 @@ class MainActivity : AppCompatActivity() {
       } else {
         Snackbar.make(view, R.string.alreadyAnswer, Snackbar.LENGTH_INDEFINITE)
             .setAction(R.string.ok) {
-              currentIndex = (currentIndex + 1) % questionBank.size
+              quizViewModel.getNextIndex()
               updateQuestion()
             }
             .show()
@@ -124,32 +110,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     binding.buttonNext.setOnClickListener {
-      currentIndex = (currentIndex + 1) % questionBank.size
+      quizViewModel.getNextIndex()
       updateQuestion()
     }
 
     binding.textQuestion.setOnClickListener {
-      currentIndex = (currentIndex + 1) % questionBank.size
+      quizViewModel.getNextIndex()
       updateQuestion()
     }
 
     binding.buttonPrev.setOnClickListener {
-      if (currentIndex == 0) {
-        currentIndex = questionBank.size - 1
-        updateQuestion()
-      } else {
-        currentIndex = (currentIndex - 1) % questionBank.size
-        updateQuestion()
-      }
+      quizViewModel.getPrevIndex()
+      updateQuestion()
     }
 
     binding.buttonRandom.setOnClickListener {
-      currentIndex = Random.nextInt(questionBank.size)
+      quizViewModel.getRandomIndex()
       updateQuestion()
     }
 
     binding.buttonDebug.setOnClickListener {
-      Toast.makeText(this, "Score Now: ${correctCount}/${incorrectCount}", Toast.LENGTH_SHORT)
+      Toast.makeText(
+              this,
+              "Score Now: ${quizViewModel.correctAnswerCount}/${quizViewModel.incorrectAnswerCount}",
+              Toast.LENGTH_SHORT)
           .show()
     }
 
@@ -182,9 +166,12 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun updateQuestion() {
-    binding.textQuestion.setText(questionBank[currentIndex].textResId)
-    if (correctCount + incorrectCount == 6) {
-      Toast.makeText(this, "Your Score: ${correctCount}/${incorrectCount}", Toast.LENGTH_LONG)
+    binding.textQuestion.setText(quizViewModel.currentQuestionText)
+    if (quizViewModel.correctAnswerCount + quizViewModel.incorrectAnswerCount == 6) {
+      Toast.makeText(
+              this,
+              "Your Score: ${quizViewModel.correctAnswerCount}/${quizViewModel.incorrectAnswerCount}",
+              Toast.LENGTH_LONG)
           .show()
     }
   }
