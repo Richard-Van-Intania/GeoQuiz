@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.geoquiz.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
@@ -19,6 +20,13 @@ class MainActivity : AppCompatActivity() {
   //  private lateinit var buttonDebug: Button
 
   private lateinit var binding: ActivityMainBinding
+
+  /*
+  “The viewModels() property delegate works the same way:
+  Your QuizViewModel will not be initialized unless you access it.
+  By referencing it in a logging message, you can initialize it and log the value on the same line.”
+  */
+  private val quizViewModel: QuizViewModel by viewModels()
 
   private val questionBank =
       listOf(
@@ -39,6 +47,10 @@ class MainActivity : AppCompatActivity() {
     // setContentView(R.layout.activity_main)
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
+
+    // By referencing it in a logging message, you can initialize it and log the value on the same
+    // line
+    Log.d(TAG, "Got a QuizViewModel: $quizViewModel")
 
     //    textQuestion = findViewById(R.id.textQuestion)
     //    buttonTrue = findViewById(R.id.buttonTrue)
