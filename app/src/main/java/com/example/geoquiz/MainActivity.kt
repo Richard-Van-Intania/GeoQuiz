@@ -60,24 +60,24 @@ class MainActivity : AppCompatActivity() {
     //    }
 
     binding.buttonTrue.setOnClickListener { view: View ->
-      if (!questionBank[currentIndex].answered) {
-        if (questionBank[currentIndex].answer) {
-          questionBank[currentIndex].answered = true
+      if (!quizViewModel.currentIsAnswerd) {
+        if (quizViewModel.currentAnswer) {
+          quizViewModel.currentIsAnswerd = true
           Snackbar.make(view, R.string.correct_toast, Snackbar.LENGTH_SHORT)
               .setAction(R.string.ok) {}
               .show()
-          correctCount++
+          quizViewModel.correctCount++
         } else {
-          questionBank[currentIndex].answered = true
+          quizViewModel.currentIsAnswerd = true
           Snackbar.make(view, R.string.incorrect_toast, Snackbar.LENGTH_SHORT)
               .setAction(R.string.ok) {}
               .show()
-          incorrectCount++
+          quizViewModel.incorrectCount++
         }
       } else {
         Snackbar.make(view, R.string.alreadyAnswer, Snackbar.LENGTH_INDEFINITE)
             .setAction(R.string.ok) {
-              currentIndex = (currentIndex + 1) % questionBank.size
+              quizViewModel.getNextIndex()
               updateQuestion()
             }
             .show()
@@ -85,19 +85,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     binding.buttonFalse.setOnClickListener { view: View ->
-      if (!questionBank[currentIndex].answered) {
-        if (!questionBank[currentIndex].answer) {
-          questionBank[currentIndex].answered = true
+      if (!quizViewModel.currentIsAnswerd) {
+        if (!quizViewModel.currentAnswer) {
+          quizViewModel.currentIsAnswerd = true
           Snackbar.make(view, R.string.correct_toast, Snackbar.LENGTH_SHORT)
               .setAction(R.string.ok) {}
               .show()
-          correctCount++
+          quizViewModel.correctCount++
         } else {
-          questionBank[currentIndex].answered = true
+          quizViewModel.currentIsAnswerd = true
           Snackbar.make(view, R.string.incorrect_toast, Snackbar.LENGTH_SHORT)
               .setAction(R.string.ok) {}
               .show()
-          incorrectCount++
+          quizViewModel.incorrectCount++
         }
       } else {
         Snackbar.make(view, R.string.alreadyAnswer, Snackbar.LENGTH_INDEFINITE)
@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
     binding.buttonDebug.setOnClickListener {
       Toast.makeText(
               this,
-              "Score Now: ${quizViewModel.correctAnswerCount}/${quizViewModel.incorrectAnswerCount}",
+              "Score Now: ${quizViewModel.correctCount}/${quizViewModel.incorrectCount}",
               Toast.LENGTH_SHORT)
           .show()
     }
@@ -167,12 +167,5 @@ class MainActivity : AppCompatActivity() {
 
   private fun updateQuestion() {
     binding.textQuestion.setText(quizViewModel.currentQuestionText)
-    if (quizViewModel.correctAnswerCount + quizViewModel.incorrectAnswerCount == 6) {
-      Toast.makeText(
-              this,
-              "Your Score: ${quizViewModel.correctAnswerCount}/${quizViewModel.incorrectAnswerCount}",
-              Toast.LENGTH_LONG)
-          .show()
-    }
   }
 }

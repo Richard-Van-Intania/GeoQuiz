@@ -20,23 +20,21 @@ class QuizViewModel : ViewModel() {
           Question(R.string.question_americas, true),
           Question(R.string.question_asia, true))
 
-  private var currentIndex: Int = 0
-  private var correctCount: Int = 0
-  private var incorrectCount: Int = 0
+  var currentIndex: Int = 0
+  var correctCount: Int = 0
+  var incorrectCount: Int = 0
 
-  val currentQuestionAnswer: Boolean
+  val currentAnswer: Boolean
     get() = questionBank[currentIndex].answer
 
-  val currentQuestionAlreadyAnswer: Boolean
-    get() = questionBank[currentIndex].answer
+  var currentIsAnswerd: Boolean
+    get() = questionBank[currentIndex].answered
+    set(value) {
+      questionBank[currentIndex].answered = value
+    }
 
   val currentQuestionText: Int
     get() = questionBank[currentIndex].textResId
-
-  val correctAnswerCount: Int
-    get() = correctCount
-  val incorrectAnswerCount: Int
-    get() = incorrectCount
 
   fun getNextIndex() {
     currentIndex = (currentIndex + 1) % questionBank.size
