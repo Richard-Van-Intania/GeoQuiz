@@ -11,13 +11,12 @@ import com.google.android.material.snackbar.Snackbar
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity() {
-  //  private lateinit var textQuestion: TextView
-  //  private lateinit var buttonTrue: Button
-  //  private lateinit var buttonFalse: Button
-  //  private lateinit var buttonNext: Button
-  //  private lateinit var buttonDebug: Button
-
+  class MainActivity : AppCompatActivity() {
+    //  private lateinit var textQuestion: TextView
+    //  private lateinit var buttonTrue: Button
+    //  private lateinit var buttonFalse: Button
+    //  private lateinit var buttonNext: Button
+    //  private lateinit var buttonDebug: Button
   private lateinit var binding: ActivityMainBinding
 
   /*
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         }
       } else {
         Snackbar.make(view, R.string.alreadyAnswer, Snackbar.LENGTH_INDEFINITE)
-            .setAction(R.string.ok) {
+            .setAction(R.string.next_button) {
               quizViewModel.getNextIndex()
               updateQuestion()
             }
@@ -101,7 +100,7 @@ class MainActivity : AppCompatActivity() {
         }
       } else {
         Snackbar.make(view, R.string.alreadyAnswer, Snackbar.LENGTH_INDEFINITE)
-            .setAction(R.string.ok) {
+            .setAction(R.string.next_button) {
               quizViewModel.getNextIndex()
               updateQuestion()
             }
