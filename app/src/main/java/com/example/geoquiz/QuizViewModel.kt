@@ -1,17 +1,26 @@
 package com.example.geoquiz
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import kotlin.random.Random
 
 private const val TAG = "QuizViewModel"
 
-class QuizViewModel : ViewModel() {
+/*
+One way to do this is to store data in saved instance state.
+Saved instance state is data the OS temporarily stores outside of the activity.
+You can add values to saved instance state by using a SavedStateHandle
+save activity when user don't use app for long time
+ */
+const val CURRENT_INDEX_KEY = "CURRENT_INDEX_KEY"
+
+class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
   init {
     Log.d(TAG, "ViewModel instance created")
   }
 
-  private val questionBank =
+  val questionBank =
       listOf(
           Question(R.string.question_australia, true),
           Question(R.string.question_oceans, true),
@@ -20,18 +29,15 @@ class QuizViewModel : ViewModel() {
           Question(R.string.question_americas, true),
           Question(R.string.question_asia, true))
 
-  var currentIndex: Int = 0
+  var currentIndex: Int
+    get() = savedStateHandle[CURRENT_INDEX_KEY] ?: 0
+    set(value) = savedStateHandle.set(CURRENT_INDEX_KEY, value)
+
   var correctCount: Int = 0
   var incorrectCount: Int = 0
 
   val currentAnswer: Boolean
     get() = questionBank[currentIndex].answer
-
-  var currentIsAnswerd: Boolean
-    get() = questionBank[currentIndex].answered
-    set(value) {
-      questionBank[currentIndex].answered = value
-    }
 
   val currentQuestionText: Int
     get() = questionBank[currentIndex].textResId
