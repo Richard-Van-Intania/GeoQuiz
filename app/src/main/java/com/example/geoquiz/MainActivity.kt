@@ -110,6 +110,11 @@ class MainActivity : AppCompatActivity() {
               Toast.LENGTH_SHORT)
           .show()
     }
+    binding.buttonCheat.setOnClickListener {
+      val answerIsTrue = quizViewModel.currentAnswer
+      val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+      startActivity(intent)
+    }
 
     updateQuestion()
   }
