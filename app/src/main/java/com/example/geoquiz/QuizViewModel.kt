@@ -71,3 +71,9 @@ class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
     Log.d(TAG, "ViewModel instance about to be destroyed")
   }
 }
+/*
+3 things do later follow book
+
+
+
+ */
