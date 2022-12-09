@@ -1,5 +1,6 @@
 package com.example.geoquiz
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -24,7 +25,12 @@ class MainActivity : AppCompatActivity() {
   private val quizViewModel: QuizViewModel by viewModels()
 
   private val cheatLauncher =
-      registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result -> }
+      registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+          quizViewModel.cheatStatus =
+              result.data?.getBooleanExtra(EXTRA_CURRENT_CHEAT_STATUS, false) ?: false
+        }
+      }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -110,7 +116,7 @@ class MainActivity : AppCompatActivity() {
     binding.buttonDebug.setOnClickListener {
       Toast.makeText(
               this,
-              "Score Now: ${quizViewModel.correctCount}/${quizViewModel.incorrectCount}",
+              "Score Now: ${quizViewModel.correctCount}/${quizViewModel.incorrectCount}, Cheater?: ${quizViewModel.cheatStatus}",
               Toast.LENGTH_SHORT)
           .show()
     }
@@ -118,7 +124,7 @@ class MainActivity : AppCompatActivity() {
       val intent =
           CheatActivity.newIntent(
               this@MainActivity, quizViewModel.currentIndex, quizViewModel.currentAnswer)
-      startActivity(intent)
+      cheatLauncher.launch(intent)
     }
 
     updateQuestion()

@@ -14,6 +14,7 @@ You can add values to saved instance state by using a SavedStateHandle
 save activity when user don't use app for long time
  */
 const val CURRENT_INDEX_KEY = "CURRENT_INDEX_KEY"
+const val CHEAT_STATUS_KEY = "CHEAT_STATUS_KEY"
 
 class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
   init {
@@ -32,6 +33,10 @@ class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
   var currentIndex: Int
     get() = savedStateHandle[CURRENT_INDEX_KEY] ?: 0
     set(value) = savedStateHandle.set(CURRENT_INDEX_KEY, value)
+
+  var cheatStatus: Boolean
+    get() = savedStateHandle[CHEAT_STATUS_KEY] ?: false
+    set(value) = savedStateHandle.set(CHEAT_STATUS_KEY, value)
 
   var correctCount: Int = 0
   var incorrectCount: Int = 0
