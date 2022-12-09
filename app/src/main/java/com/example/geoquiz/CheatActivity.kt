@@ -3,18 +3,22 @@ package com.example.geoquiz
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.geoquiz.databinding.ActivityCheatBinding
+import com.google.android.material.snackbar.Snackbar
 
-private const val EXTRA_ANSWER_IS_TRUE = "com.example.geoquiz.answer_is_true"
-private var answerIsTrue = false
+private const val EXTRA_CURRENT_ANSWER = "com.example.geoquiz.currentAnswer"
+private const val EXTRA_CURRENT_INDEX = "com.example.geoquiz.currentIndex"
+private var currentAnswer = false
 
 class CheatActivity : AppCompatActivity() {
   private lateinit var binding: ActivityCheatBinding
   companion object {
-    fun newIntent(packageContext: Context, answerIsTrue: Boolean): Intent {
+    fun newIntent(packageContext: Context, currentIndex: Int, currentAnswer: Boolean): Intent {
       return Intent(packageContext, CheatActivity::class.java).apply {
-        putExtra(EXTRA_ANSWER_IS_TRUE, answerIsTrue)
+        putExtra(EXTRA_CURRENT_ANSWER, currentAnswer)
+        putExtra(EXTRA_CURRENT_INDEX, currentIndex)
       }
     }
   }
@@ -22,15 +26,20 @@ class CheatActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     binding = ActivityCheatBinding.inflate(layoutInflater)
     setContentView(binding.root)
-    answerIsTrue = intent.getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false)
+    currentAnswer = intent.getBooleanExtra(EXTRA_CURRENT_ANSWER, false)
 
     binding.buttonShowAnswer.setOnClickListener {
       val answerText =
           when {
-            answerIsTrue -> R.string.true_button
+            currentAnswer -> R.string.true_button
             else -> R.string.false_button
           }
       binding.textAnswer.setText(answerText)
+    }
+    binding.buttonDebugCheat.setOnClickListener { view: View ->
+      Snackbar.make(
+              view, intent.getIntExtra(EXTRA_CURRENT_INDEX, 0).toString(), Snackbar.LENGTH_SHORT)
+          .show()
     }
   }
 }

@@ -55,4 +55,25 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+
+        <Button
+            android:id="@+id/buttonDebugCheat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:text="@string/debug_button"
+            android:textSize="20sp"
+            app:icon="@drawable/ic_baseline_code_24"
+            app:iconGravity="textStart" />
+
+    </LinearLayout>
+
 </LinearLayout>
