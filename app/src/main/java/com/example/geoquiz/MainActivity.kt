@@ -1,11 +1,9 @@
 package com.example.geoquiz
 
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.geoquiz.databinding.ActivityMainBinding
@@ -23,14 +21,6 @@ class MainActivity : AppCompatActivity() {
   By referencing it in a logging message, you can initialize it and log the value on the same line.”
   */
   private val quizViewModel: QuizViewModel by viewModels()
-
-  private val cheatLauncher =
-      registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-          quizViewModel.cheatStatus =
-              result.data?.getBooleanExtra(EXTRA_CURRENT_CHEAT_STATUS, false) ?: false
-        }
-      }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -116,15 +106,14 @@ class MainActivity : AppCompatActivity() {
     binding.buttonDebug.setOnClickListener {
       Toast.makeText(
               this,
-              "Score Now: ${quizViewModel.correctCount}/${quizViewModel.incorrectCount}, Cheater?: ${quizViewModel.cheatStatus}",
+              "Score Now: ${quizViewModel.correctCount}/${quizViewModel.incorrectCount}",
               Toast.LENGTH_SHORT)
           .show()
     }
     binding.buttonCheat.setOnClickListener {
-      val intent =
-          CheatActivity.newIntent(
-              this@MainActivity, quizViewModel.currentIndex, quizViewModel.currentAnswer)
-      cheatLauncher.launch(intent)
+      val answerIsTrue = quizViewModel.currentAnswer
+      val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+      startActivity(intent)
     }
 
     updateQuestion()
